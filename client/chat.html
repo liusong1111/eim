@@ -1,0 +1,91 @@
+<html ng-app>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>ComCat订餐小工具</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="js/angular-1.0.5.js"></script>
+    <script type="text/javascript" src="js/underscore-1.4.4.js"></script>
+    <!--<script type="text/javascript" src="socket.io.js"></script>-->
+
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-2.3.1.css"/>
+    <link type="text/css" rel="stylesheet" href="css/font-awesome-3.0.2.css"/>
+    <style>
+        body {
+            padding: 0;
+        }
+        .picture {
+            width: 24px;
+            height: 24px;
+            border: 1px solid #ccc;
+            float: left;
+            margin-right: 8px;
+        }
+
+        #sidebar {
+            background-image: -webkit-linear-gradient(left, #4F4F4F, #4F4F4F 85%, #606060);
+            color: #fff;
+            float: left;
+            width: 160px;
+            height: 100%;
+            max-height: 100%;
+            box-shadow: 1px 0 2px #CCC;
+        }
+
+        .chat {
+            float: left;
+            padding: 6px 0 6px 6px;
+            clear: both;
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        .chat.active {
+            box-shadow: inset 0 0 0 2px rgba(51,51,153, 0.9);
+            background-image: -webkit-linear-gradient(left, rgba(51,51,153, 0.6), rgba(51,51,153, 0.6) 85%, rgba(31,31,153, 1));
+        }
+    </style>
+    <script type="text/javascript">
+        function ChatController($scope) {
+            $scope.chats = [
+                {
+                    name: "拐拐龙"
+                },{
+                    name: "CCC"
+                },{
+                    name: "CCC"
+                },{
+                    name: "CCC"
+                },{
+                    name: "CCC"
+                }
+            ];
+
+            $scope.currentChat = null;
+
+            $scope.setCurrentChat = function(chat) {
+                $scope.currentChat = chat;
+            };
+        }
+    </script>
+
+</head>
+<body ng-controller="ChatController">
+<div>
+    <div id="sidebar">
+        <div ng-repeat="chat in chats" class="chat" id="{{chat.name}}"
+             ng-click="setCurrentChat(chat)"
+             ng-class="currentChat==chat && 'active' || ''">
+            <img src="" class="picture"/>
+            <span class="chatName">{{chat.name}}</span>
+        </div>
+    </div>
+    <div id="main">
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+    "main": "friends.html",
+//    "main": "chat.html",
+    "name": "ComCat订餐小工具",
+    "description": "ComCat订餐 - 码农以食为天",
+    "version": "0.1.0",
+    "keywords": [ "吃饱才能干活，嗯嗯" ],
+    "window": {
+        "icon": "img/favicon.icon",
+        "toolbar": true,
+//        "toolbar": false,
+//        "transparent": true,
+        "width": 250,
+        "height": 500,
+        "position": "mouse",
+        "min_width": 80,
+        "min_height": 200
+    }
+}
