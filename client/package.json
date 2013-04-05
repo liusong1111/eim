@@ -1,6 +1,5 @@
 {
-    "main": "friends.html",
-//    "main": "chat.html",
+    "main": "login.html",
     "name": "ComCat订餐小工具",
     "description": "ComCat订餐 - 码农以食为天",
     "version": "0.1.0",
@@ -8,12 +7,13 @@
     "window": {
         "icon": "img/favicon.icon",
         "toolbar": true,
-//        "toolbar": false,
-//        "transparent": true,
-        "width": 250,
-        "height": 500,
-        "position": "mouse",
-        "min_width": 80,
-        "min_height": 200
+        "frame": false,
+        "width": 210,
+        "min_width": 210,
+        "max_width": 210,
+        "height": 190,
+        "min_height": 190,
+        "max_height": 190,
+        "position": "mouse"
     }
 }
