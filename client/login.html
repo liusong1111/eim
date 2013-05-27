@@ -6,7 +6,7 @@
     <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="js/angular-1.0.5.js"></script>
     <script type="text/javascript" src="js/underscore-1.4.4.js"></script>
-    <!--<script type="text/javascript" src="socket.io.js"></script>-->
+    <script type="text/javascript" src="js/socket.io.js"></script>
 
     <link type="text/css" rel="stylesheet" href="css/bootstrap-2.3.1.css"/>
     <link type="text/css" rel="stylesheet" href="css/font-awesome-3.0.2.css"/>
@@ -15,12 +15,12 @@
             padding: 0;
             margin: 0;
 
-            -webkit-app-region: drag;
             /*background-image: -webkit-linear-gradient(top, #f0f0f0, #999);*/
             background-image: -webkit-linear-gradient(left, rgba(0, 15, 215, 0.8), rgba(15, 15, 225, 0.2));
         }
 
         .titleBar {
+            -webkit-app-region: drag;
             -webkit-user-select: none;
             cursor: default;
             position: relative;
@@ -28,6 +28,7 @@
 
         .title {
             font-size: 16px;
+            margin-top: 40px;
             padding: 12px;
             color: #fff;
             text-shadow: 1px 1px 1px #333;
@@ -40,8 +41,8 @@
             color: #c33;
             font-size: 18px;
             display: block;
-            padding: 4px 8px;
-            border-bottom-left-radius: 4px;
+            padding: 3px 10px;
+            border-bottom-left-radius: 3px;
         }
 
         .btn-close:hover {
@@ -51,7 +52,11 @@
         }
 
         .logo {
-            margin: 8px;
+            margin-top: 6px;
+            margin-left: -30px;
+            padding: 12px auto;
+            position: absolute;
+            z-index: -1;
         }
 
         form {
@@ -95,16 +100,26 @@
 
     </style>
     <script type="text/javascript">
+        var socket = global.socket = io.connect('ws://localhost:8384');
+//    var socket = require("./js/socket.js");
+
         function LoginController($scope) {
             $scope.onLogin = function () {
                 if (!$scope.formValid()) {
                     return;
                 }
 
-
-                alert("here");
-
+                global.socket.emit("auth", $scope.username, $scope.password, function(error, data) {
+                    $scope.onLoginSuccess();
+                });
             };
+
+            global.socket.on("chat:friends", function(friends) {
+                console.info("chat:friends...");
+                console.info(friends);
+                $scope.friends = friends;
+                $scope.$digest();
+            });
 
             $scope.formValid = function () {
                 return $scope.username && $scope.password;
@@ -119,6 +134,7 @@
                     "min_width": 80,
                     "min_height": 200
                 });
+                window.close();
             };
 
             $scope.closeWindow = function () {
@@ -134,7 +150,7 @@
 <div class="titleBar">
     <i class="icon icon-remove btn-close" ng-click="closeWindow()"></i>
 
-    <div style="text-align: center;margin: 0 10px 0px -10px">
+    <div style="text-align: center;">
         <img src="img/favicon.ico" class="logo"/>
         <br/>
 

@@ -1,6 +1,6 @@
 #!/usr/local/bin/node
-var io = require('socket.io').listen(5555);
-var core = require("./core.js");
+var sugar = require("sugar");
+var io = require('socket.io').listen(8384);
 
 function fix(fn) {
     function handleError(error, result) {
@@ -28,13 +28,25 @@ function clientsInRoom(roomName) {
 
 function startListen() {
     io.sockets.on('connection', function (socket) {
-        var client = new core.Client();
 
-        socket.on("auth", function (username, password) {
+        socket.on("auth", function (username, password, callback) {
             socket.username = username;
             socket.password = password;
 
             socket.join('default');
+            io.sockets.in("default").emit("chat:join", {
+                username: username
+            });
+            var clients = clientsInRoom("default");
+            var members = clients.map(function(client) {
+                return {
+                    username: client.username,
+                    nickname: client.username,
+                    signature: '还没签名'
+                };
+            });
+            socket.emit("chat:friends", members);
+            callback(null, {});
         });
 
         socket.on("disconnect", function () {
